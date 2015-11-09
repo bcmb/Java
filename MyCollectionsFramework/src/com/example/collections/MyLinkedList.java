@@ -1,52 +1,50 @@
 package com.example.collections;
 
-public class MyLinkedList<T> implements IMyCollections<T> {
+import java.util.LinkedList;
 
-	class Node<T> {
-		int prev;
-		int next;
-		public T data;
+public class MyLinkedList<T> implements IMyCollections<T> {
 	
-		public Node (int prev, int next, T data) {
-			this.prev = prev; 
-			this.next = next; 
-			this.data = data; 
+	Node first;
+	Node last;
+	
+	class Node<T> {
+		public T data;
+		Node prev;
+		Node next;
+		
+		public Node(T data) {
+			this.data= data;
 		}
 	}
 	
 	private transient Object[] data;
 	private int index = 0;
 	
-	public MyLinkedList() {
-		this.data = new Object[1];
-	}
-	
 	@Override
 	public boolean add(T t) {
-		if (index == 0) {
-			data[index] = new Node(t.hashCode(), t.hashCode(), t);;
+		if (first == null) {
+			Node newNode = new Node(t);
+			last = first = newNode;
+			newNode.prev = newNode.next = newNode;
 			index++;
-			return true;
-			
+		} else if (index == 1) {
+			Node nextNode = new Node(t);
+			nextNode.next = first;
+			first.next = nextNode;
+			last = nextNode;
+			index++;
 		} else {
-			increaseDataSize(); 
-			data[index] = new Node(((Node) data[index-1]).next, ((Node) data[0]).prev, t);
+			Node nextNode = new Node(t);
+			nextNode.next = first;
+			last = nextNode;
 			index++;
-			return true;
 		}
-	}
-
-	private void increaseDataSize() {
-		Object[] tmp = new Object[data.length+1];
-		for (int i = 0; i < data.length; i++) {
-			tmp[i] = data[i];
-		}
-		data = tmp;
+		return true;
 	}
 
 	@Override
 	public int size() {
-		return data.length;
+		return index;
 	}
 
 	@Override
@@ -67,7 +65,7 @@ public class MyLinkedList<T> implements IMyCollections<T> {
 	public boolean remove(Object o) {
 		for (int i = 0; i < data.length-1; i++) {
 			if (data[i].equals(o)) {
-				removeFromMiddle(i);
+				//removeFromMiddle(i);
 			}
 		}
 		return false;
@@ -91,15 +89,12 @@ public class MyLinkedList<T> implements IMyCollections<T> {
 		return null;
 	}
 	
-	private void removeFromMiddle(int i) {
-		int k = 0;
-		Object[] tmp = new Object[data.length-1];
-		for (int j = 0; j < data.length; j++, k++) {
-			if (j == i) j++;
-			tmp[k] = data[j];
+	public void showContent(int size) {
+		int iterator = 0;
+		Node n = first;
+		for (int i = 0; i <= size; i++) {
+			System.out.println(n.data);
+			n = n.next;
 		}
-		data = tmp;
-		index = k-1;
 	}
-
 }
