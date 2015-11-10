@@ -1,10 +1,13 @@
 package com.example.multithreadrw;
 
+import com.example.multithreadrw.*;
+
 public class MultithreadRWDemo {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		String s = "This is a simple string";
+		Runner r = new Runner();
+		Thread t = new Thread(r);
+		t.start();
 	}
-
 }
