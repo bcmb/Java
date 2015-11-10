@@ -7,7 +7,7 @@ public class RandomGenerator {
 			for (int a : generateNumber()) {
 				System.out.print(a);
 			}
-		}
+	}
 	
 	static int[] generateNumber() {
 		Random rand = new Random(); 
@@ -21,11 +21,11 @@ public class RandomGenerator {
 		do {
 			third = rand.nextInt(9)+1;
 		}
-		while (third == first && third == second);	
+		while (third == first | third == second);	
 		do {
 			fourth = rand.nextInt(9)+1;
 		}
-		while (fourth == first && fourth == second && fourth == third);
+		while (fourth == first | fourth == second | fourth == third);
 		int[] arr = {first, second, third, fourth};
 		return arr;
 	}
